@@ -6,7 +6,5 @@
             <p class="attribution">Powered by Google Places API & Ticketmaster Discovery API</p>
         </div>
     </footer>
-    <!-- Link to the static vanilla JS file -->
-    <script src="/static/js/app.js"></script>
 </body>
 </html>
