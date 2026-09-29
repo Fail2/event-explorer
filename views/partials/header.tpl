@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Event Explorer</title>
-    <!-- Link to the static asset directory -->
+    <meta name="description" content="{{if .MetaDescription}}{{.MetaDescription}}{{else}}Discover local live Music and Sports events in your favourite cities. Find dates, venues, details, and purchase direct verified tickets safely.{{end}}">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
