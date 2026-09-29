@@ -1,0 +1,462 @@
+:root {
+    --bg-main: #f4f6f5;
+    --brand-dark: #17745c;
+    --brand-accent: #027a5b;
+    --text-black: #000000;
+    --text-gray: #4b5563;
+    --text-light: #9ca3af;
+    --border-gray: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-black);
+    line-height: 1.5;
+    padding-bottom: 80px;
+}
+
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.site-header {
+    background-color: transparent;
+    padding: 24px 0;
+}
+
+.nav-container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--brand-dark);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.logo-icon {
+    background-color: var(--brand-dark);
+    color: #ffffff;
+    border-radius: 40%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.nav-link {
+    color: var(--text-black);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 4px 0;
+    position: relative;
+}
+
+.nav-link.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--brand-dark);
+}
+
+.nav-status {
+    background-color: #fef3c7;
+    color: #b45309;
+    padding: 6px 14px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-status span {
+    color: #d97706;
+}
+
+.hero-container {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 40px;
+    padding: 60px 0 50px 0;
+    align-items: center;
+}
+
+.hero-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--brand-accent);
+    margin-bottom: 24px;
+    position: relative;
+    padding-left: 28px;
+}
+
+.hero-badge::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 2px;
+    background-color: var(--brand-accent);
+}
+
+.hero-left-content h1 {
+    font-size: 3.5rem;
+    color: var(--brand-dark);
+    line-height: 1.1;
+    margin-bottom: 24px;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 32px;
+}
+
+.hero-tags {
+    display: flex;
+    gap: 12px;
+}
+
+.hero-tags span {
+    border: 1px solid #d1d5db;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+    background-color: #ffffff;
+}
+
+.hero-right-banner {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.banner-card {
+    background-color: #044335;
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 32px;
+    width: 290px;
+    height: 380px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: rotate(2deg);
+}
+
+.banner-top {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.banner-tag {
+    color: #a7f3d0;
+}
+
+.banner-page {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.banner-middle h2 {
+    font-size: 4.5rem;
+    line-height: 0.95;
+    font-weight: 900;
+    letter-spacing: -2px;
+    color: #ffffff;
+}
+
+.banner-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.banner-bottom p {
+    font-size: 0.8rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    color: #a7f3d0;
+}
+
+.banner-arrow {
+    font-size: 1.5rem;
+    color: #fb923c;
+}
+
+.search-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 60px;
+}
+
+.search-card h2 {
+    font-size: 1.5rem;
+    color: var(--brand-dark);
+    margin-bottom: 24px;
+    font-weight: 700;
+}
+
+.search-hint {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    font-weight: 400;
+    margin-left: 8px;
+}
+
+.search-form {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.input-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.1rem;
+    color: var(--text-light);
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 18px 18px 18px 52px;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    font-size: 1.05rem;
+    color: var(--text-black);
+    background-color: #ffffff;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: var(--brand-accent);
+}
+
+.search-form button {
+    background-color: #014736;
+    color: #ffffff;
+    border: none;
+    padding: 0 36px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.search-form button:hover:not(:disabled) {
+    background-color: var(--brand-accent);
+}
+
+.search-form button:disabled {
+    background-color: #f3f4f6;
+    color: var(--text-light);
+    cursor: not-allowed;
+}
+
+.search-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--text-gray);
+}
+
+.search-note {
+    color: var(--text-light);
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    z-index: 50;
+    display: none;
+}
+
+.journey-section {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 60px;
+    margin-bottom: 60px;
+}
+
+.journey-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--brand-accent);
+    margin-bottom: 16px;
+}
+
+.journey-section h2 {
+    font-size: 2.25rem;
+    color: var(--brand-dark);
+    margin-bottom: 12px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+.journey-subtitle {
+    font-size: 1.1rem;
+    color: var(--text-gray);
+    margin-bottom: 48px;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+    margin-bottom: 60px;
+}
+
+.step-item {
+    border-top: 1px solid #d1d5db;
+    padding-top: 24px;
+}
+
+.step-num {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--brand-accent);
+    margin-bottom: 16px;
+}
+
+.step-item h3 {
+    font-size: 1.25rem;
+    color: var(--brand-dark);
+    margin-bottom: 10px;
+}
+
+.step-item p {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+}
+
+.sample-cities-card {
+    background-color: #f1f5f3;
+    border: 1px dashed #cbd5e1;
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sample-info strong {
+    display: block;
+    font-size: 1.05rem;
+    color: var(--brand-dark);
+    margin-bottom: 6px;
+}
+
+.sample-info p {
+    font-size: 0.95rem;
+    color: var(--text-gray);
+}
+
+.sample-buttons {
+    display: flex;
+    gap: 16px;
+}
+
+.btn-sample {
+    background-color: #ffffff;
+    border: 1px solid var(--border-gray);
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: var(--text-black);
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.btn-sample:hover {
+    border-color: var(--brand-dark);
+    color: var(--brand-dark);
+}
+
+.site-footer {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-right-banner {
+        display: none;
+    }
+
+    .hero-left-content h1 {
+        font-size: 2.5rem;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sample-cities-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+}
