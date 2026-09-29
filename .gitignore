@@ -1,0 +1,27 @@
+# --- SECRETS & ENVIRONMENT VARIABLES (CRITICAL) ---
+.env
+.env.local
+.env.*.local
+
+# --- BEEGO SPECIFIC ---
+/event-explorer
+/obj/
+/exe/
+/bin/
+
+# --- GO SPECIFIC ---
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# --- DEPENDENCIES ---
+/vendor/
+
+# --- OPERATING SYSTEM FILES ---
+.DS_Store
+Thumbs.db
+
