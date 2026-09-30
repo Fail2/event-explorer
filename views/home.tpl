@@ -44,8 +44,10 @@
     </form>
     
     <div class="search-footer">
-        <span>Type at least 3 characters and select a suggestion.</span>
-        <span class="search-note">Local sample cities, not Google results</span>
+            <div class="footer-left">
+            <span class="search-instructions">Type at least 3 characters and select a suggestion.</span>
+            <div id="selection-success-msg" class="success-message">Toronto</div>
+        </div>        <span class="search-note">Local sample cities, not Google results</span>
     </div>
 </div>
 

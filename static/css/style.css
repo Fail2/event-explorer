@@ -270,19 +270,31 @@ body {
     color: var(--text-light);
 }
 
+.input-wrapper {
+    position: relative;
+    flex: 1;
+    border-radius: 12px;
+    padding: 4px;
+    background-color: transparent;
+    border: 3px solid transparent;
+}
+
 .input-wrapper input {
     width: 100%;
-    padding: 18px 18px 18px 52px;
-    border: 1px solid var(--border-gray);
+    padding: 14px 16px 14px 44px;
+    border: 1px solid rgba(2, 122, 91, 0.5);
     border-radius: 8px;
-    font-size: 1.05rem;
-    color: var(--text-black);
+    font-size: 0.95rem;
+    color: #18181b;
     background-color: #ffffff;
 }
 
 .input-wrapper input:focus {
     outline: none;
-    border-color: var(--brand-accent);
+}
+
+.input-wrapper:focus-within {
+    border: 3px solid #be8916;
 }
 
 .search-form button {
@@ -310,8 +322,21 @@ body {
 .search-footer {
     display: flex;
     justify-content: space-between;
-    font-size: 0.85rem;
-    color: var(--text-gray);
+    font-size: 0.75rem;
+    color: #a1a1aa;
+    margin-top: 4px;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.success-message {
+    color: #004638;
+    display: none;
+    margin-top: 2px;
 }
 
 .search-note {
@@ -320,15 +345,37 @@ body {
 
 .suggestions-dropdown {
     position: absolute;
-    top: calc(100% + 6px);
+    top: calc(100% + 4px);
     left: 0;
     right: 0;
     background-color: #ffffff;
-    border: 1px solid var(--border-gray);
-    border-radius: 8px;
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    border: 1px solid #d4d4d8;
+    border-top: none;
+    border-radius: 6px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     z-index: 50;
     display: none;
+    margin-top: -4px;
+}
+
+.suggestion-item {
+    padding: 14px 20px 14px 44px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #27272a;
+    background-color: #ffffff;
+    transition: background-color 0.15s ease, color 0.15s ease;
+    text-align: left;
+}
+
+.suggestion-item:last-child {
+    border-radius: 0 0 6px 6px;
+}
+
+.suggestion-item:hover {
+    background-color: #f0f4f2;
+    color: #004638;
+    font-weight: 500;
 }
 
 .journey-section {

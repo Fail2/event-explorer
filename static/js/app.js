@@ -42,11 +42,16 @@ document.addEventListener('DOMContentLoaded', function () {
                             cityInput.value = item.text;
                             suggestionsDropdown.innerHTML = '';
                             suggestionsDropdown.style.display = 'none';
-
+                            const successMsg = document.querySelector('.success-message');
+                            if (successMsg) {
+                                successMsg.textContent = `Selected ${item.text}. You are ready to explore.`;
+                                successMsg.style.display = "block";
+                            }
                             fetch(`/api/locations/${item.placeId}?sessionToken=${sessionToken}`)
                                 .then(res => res.json())
                                 .then(locationData => {
-                                    if (locationData.countryCode) {
+                                    if (locationData.city && locationData.countryCode) {
+                                        cityInput.value = locationData.city;
                                         countryCodeInput.value = locationData.countryCode;
                                         searchButton.disabled = false;
                                         sessionToken = generateUUID();
