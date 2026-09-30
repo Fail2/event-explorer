@@ -7,9 +7,19 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 )
 
-func FetchTicketmasterEvents(city,countryCode,classification,size string,) (models.TicketmasterResponse, error) {
+func formatTime(timeStr string) string {
+	t, err := time.Parse("15:04:05", timeStr)
+	if err != nil {
+		return timeStr
+	}
+
+	return t.Format("3:04 PM")
+}
+
+func FetchTicketmasterEvents(city, countryCode, classification, size string) (models.TicketmasterResponse, error) {
 
 	var output models.TicketmasterResponse
 
@@ -108,7 +118,7 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 		TicketURL:   tmEvent.URL,
 		Description: tmEvent.Description,
 		Date:        tmEvent.Dates.Start.LocalDate,
-		Time:        tmEvent.Dates.Start.LocalTime,
+		Time:        formatTime(tmEvent.Dates.Start.LocalTime),
 		TimeZone:    tmEvent.Dates.TimeZone,
 		Category:    tmEvent.Classifications[0].Category.Name,
 		Genre:       tmEvent.Classifications[0].Genre.Name,
