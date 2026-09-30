@@ -75,8 +75,6 @@ func (c *EventController) GetEventDetails() {
 		return
 	}
 
-	fmt.Println(event)
-
 	c.Data["Event"] = event
 	c.TplName = "details.tpl"
 }

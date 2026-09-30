@@ -9,12 +9,7 @@ import (
 	"os"
 )
 
-func FetchTicketmasterEvents(
-	city,
-	countryCode,
-	classification,
-	size string,
-) (models.TicketmasterResponse, error) {
+func FetchTicketmasterEvents(city,countryCode,classification,size string,) (models.TicketmasterResponse, error) {
 
 	var output models.TicketmasterResponse
 

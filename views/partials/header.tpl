@@ -16,7 +16,7 @@
             </a>
             <nav class="main-nav">
                 <a href="/" class="nav-link active">Discover</a>
-                <a href="/about" class="nav-link">About</a>
+                <a href="/" class="nav-link">About</a>
             </nav>
         </div>
     </header>

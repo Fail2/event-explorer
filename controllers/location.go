@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"event-explorer/services"
-	"fmt"
 
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -16,9 +15,7 @@ func (c *LocationController) Autocomplete() {
 
 	input := c.GetString("input")
 	sessionToken := c.GetString("sessionToken")
-
-	fmt.Println(input, sessionToken)
-
+	
 	output, err := services.FetchAutocompleteData(input, sessionToken)
 	if err != nil {
 		c.Data["json"] = map[string]string{"error": "Failed to fetch autocomplete predictions"}

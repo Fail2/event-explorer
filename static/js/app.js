@@ -23,13 +23,11 @@ document.addEventListener('DOMContentLoaded', function () {
             searchButton.disabled = true;
             return;
         }
-        console.log(query)
 
         fetch(`/api/locations/autocomplete?input=${encodeURIComponent(query)}&sessionToken=${sessionToken}`)
             .then(response => response.json())
             .then(data => {
                 suggestionsDropdown.innerHTML = '';
-                console.log(data)
 
                 if (data.suggestions && data.suggestions.length > 0) {
                     data.suggestions.forEach(item => {
@@ -52,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                         searchButton.disabled = false;
                                         sessionToken = generateUUID();
                                     }
-                                    console.log(locationData)
                                     const successMsg = document.querySelector('.success-message');
                                     if (successMsg) {
                                         successMsg.textContent = `Selected ${locationData.city}. You are ready to explore.`;
