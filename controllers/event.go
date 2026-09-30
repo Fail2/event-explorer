@@ -56,3 +56,27 @@ func (c *EventController) GetEvents() {
 
 	c.TplName = "listing.tpl"
 }
+
+func (c *EventController) GetEventDetails() {
+	eventID := c.Ctx.Input.Param(":id")
+
+	if eventID == "" {
+		c.Redirect("/", 302)
+		return
+	}
+
+	event, err := services.FetchTicketmasterEventDetails(eventID)
+	if err != nil {
+		c.Data["Error"] = fmt.Sprintf(
+			"Event details are temporarily unavailable: %v",
+			err,
+		)
+		c.TplName = "error.tpl"
+		return
+	}
+
+	fmt.Println(event)
+
+	c.Data["Event"] = event
+	c.TplName = "details.tpl"
+}

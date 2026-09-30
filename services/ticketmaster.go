@@ -67,3 +67,68 @@ func FetchTicketmasterEvents(
 
 	return output, nil
 }
+
+func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
+	var output models.UIEvent
+	apiKey := os.Getenv("TICKETMASTER_API_KEY")
+	if apiKey == "" {
+		return output, fmt.Errorf("TICKETMASTER_API_KEY is not configured")
+	}
+
+	baseUrl := fmt.Sprintf("https://app.ticketmaster.com/discovery/v2/events/%s.json", eventID)
+
+	req, err := http.NewRequest("GET", baseUrl, nil)
+	if err != nil {
+		return output, err
+	}
+
+	q := req.URL.Query()
+	q.Add("apikey", apiKey)
+	req.URL.RawQuery = q.Encode()
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		return output, err
+	}
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return output, fmt.Errorf("ticketmaster api details returned status %d", resp.StatusCode)
+	}
+
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return output, err
+	}
+
+	var tmEvent models.TMEvent
+	if err := json.Unmarshal(body, &tmEvent); err != nil {
+		return output, err
+	}
+
+	output = models.UIEvent{
+		ID:          tmEvent.ID,
+		Name:        tmEvent.Name,
+		TicketURL:   tmEvent.URL,
+		Description: tmEvent.Description,
+		Date:        tmEvent.Dates.Start.LocalDate,
+		Time:        tmEvent.Dates.Start.LocalTime,
+		TimeZone:    tmEvent.Dates.TimeZone,
+	}
+
+	if len(tmEvent.Images) > 0 {
+		output.Image = tmEvent.Images[0].URL
+	}
+
+	if len(tmEvent.Embedded.Venues) > 0 {
+		v := tmEvent.Embedded.Venues[0]
+		output.Venue = v.Name
+		output.City = v.City.Name
+		output.State = v.State.Name
+		output.Country = v.Country.Name
+		output.Address = v.Address.Adress
+	}
+
+	return output, nil
+}

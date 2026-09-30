@@ -11,4 +11,5 @@ func init() {
 	beego.Router("/api/locations/autocomplete", &controllers.LocationController{}, "get:Autocomplete")
 	beego.Router("/api/locations/:placeId", &controllers.LocationController{}, "get:GetPlaceDetails")
 	beego.Router("/events", &controllers.EventController{}, "get:GetEvents")
+	beego.Router("/events/:id", &controllers.EventController{}, "get:GetEventDetails")
 }
