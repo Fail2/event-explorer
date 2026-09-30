@@ -733,6 +733,247 @@ body {
     font-size: 0.95rem;
 }
 
+.details-wrapper {
+    padding-top: 20px;
+    text-align: left;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.details-wrapper .breadcrumb {
+    font-size: 0.8rem;
+    color: #a1a1aa;
+    margin-bottom: 24px;
+}
+
+.details-wrapper .breadcrumb a {
+    color: #a1a1aa;
+    text-decoration: none;
+}
+
+.current-event {
+    color: #a1a1aa;
+}
+
+.btn-back-navigation-top {
+    display: inline-block;
+    color: #004638;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+}
+
+.btn-back-navigation-top:hover {
+    text-decoration: underline;
+}
+
+.details-container-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.details-image-hero {
+    width: 100%;
+    height: 440px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #1e4e47;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-display-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.details-fallback-graphic {
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, #256b5f 0%, #133a33 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.graphic-waves {
+    font-size: 5rem;
+    color: rgba(167, 243, 208, 0.4);
+    letter-spacing: 4px;
+}
+
+.graphic-label-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    color: #1c1917;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 6px 12px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.details-info-section-left {
+    padding-top: 24px;
+}
+
+.details-category-sub-tag {
+    font-size: 0.85rem;
+    color: #007960;
+    font-weight: 600;
+    text-transform: capitalize;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.details-main-title-text {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #0c1a17;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #e4e4e7;
+    padding-bottom: 24px;
+}
+
+.details-about-block h2 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #0c1a17;
+    margin-bottom: 16px;
+}
+
+.details-about-block p {
+    font-size: 0.95rem;
+    color: #52525b;
+    line-height: 1.7;
+}
+
+.details-about-block .desc-p1 {
+    margin-bottom: 24px;
+}
+
+.sticky-sidebar-card {
+    background-color: #ffffff;
+    border: 1px solid #e4e4e7;
+    border-radius: 12px;
+    padding: 32px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+.sidebar-badge-accent {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #007960;
+    letter-spacing: 1px;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.sidebar-event-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #0c1a17;
+    margin-bottom: 32px;
+}
+
+.sidebar-meta-item-block {
+    margin-bottom: 24px;
+    border-bottom: 1px solid #f4f4f5;
+    padding-bottom: 20px;
+}
+
+.meta-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #71717a;
+    letter-spacing: 0.5px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.sidebar-meta-item-block strong {
+    font-size: 0.95rem;
+    color: #18181b;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.sidebar-meta-item-block p {
+    font-size: 0.85rem;
+    color: #71717a;
+    margin: 0;
+}
+
+.sidebar-meta-item-block .category-plain-text {
+    font-size: 0.95rem;
+    color: #18181b;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.btn-checkout-tickets {
+    background-color: #004638;
+    color: #ffffff;
+    border: none;
+    width: 100%;
+    padding: 14px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.btn-checkout-tickets:hover {
+    background-color: #007960;
+}
+
+.btn-arrow-icon {
+    font-size: 1rem;
+}
+
+.sidebar-footer-note {
+    font-size: 0.75rem;
+    color: #a1a1aa;
+    line-height: 1.5;
+    margin-top: 16px;
+    text-align: left;
+}
+
+.sidebar-bottom-sub-text {
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: #d4d4d8;
+    letter-spacing: 0.5px;
+    margin-top: 32px;
+    text-align: left;
+}
+
+@media (max-width: 900px) {
+    .details-container-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .details-image-hero {
+        height: 300px;
+    }
+}
+
 @media (max-width: 900px) {
     .events-cards-grid {
         grid-template-columns: repeat(2, 1fr);
