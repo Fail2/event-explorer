@@ -115,6 +115,8 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 		Date:        tmEvent.Dates.Start.LocalDate,
 		Time:        tmEvent.Dates.Start.LocalTime,
 		TimeZone:    tmEvent.Dates.TimeZone,
+		Category:    tmEvent.Classifications[0].Category.Name,
+		Genre:       tmEvent.Classifications[0].Genre.Name,
 	}
 
 	if len(tmEvent.Images) > 0 {
@@ -127,7 +129,10 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 		output.City = v.City.Name
 		output.State = v.State.Name
 		output.Country = v.Country.Name
+		output.CountryCode = v.Country.CountryCode
 		output.Address = v.Address.Adress
+		output.GeneralRule = v.GeneralInfo.GeneralRule
+		output.ChildRule = v.GeneralInfo.ChildRule
 	}
 
 	return output, nil

@@ -3,7 +3,7 @@
 <div class="details-wrapper">
     <div class="breadcrumb">
         <a href="/">Discover</a> &nbsp;/&nbsp; 
-        <a href="/events?city={{.Event.City}}&countryCode={{.Event.Country}}">{{.Event.City}}</a> &nbsp;/&nbsp; 
+        <a href="/events?city={{.Event.City}}&countryCode={{.Event.CountryCode}}">{{.Event.City}}</a> &nbsp;/&nbsp; 
         <span class="current-event">Event details</span>
     </div>
 
