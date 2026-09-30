@@ -42,11 +42,7 @@ document.addEventListener('DOMContentLoaded', function () {
                             cityInput.value = item.text;
                             suggestionsDropdown.innerHTML = '';
                             suggestionsDropdown.style.display = 'none';
-                            const successMsg = document.querySelector('.success-message');
-                            if (successMsg) {
-                                successMsg.textContent = `Selected ${item.text}. You are ready to explore.`;
-                                successMsg.style.display = "block";
-                            }
+
                             fetch(`/api/locations/${item.placeId}?sessionToken=${sessionToken}`)
                                 .then(res => res.json())
                                 .then(locationData => {
@@ -55,6 +51,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                         countryCodeInput.value = locationData.countryCode;
                                         searchButton.disabled = false;
                                         sessionToken = generateUUID();
+                                    }
+                                    console.log(locationData)
+                                    const successMsg = document.querySelector('.success-message');
+                                    if (successMsg) {
+                                        successMsg.textContent = `Selected ${locationData.city}. You are ready to explore.`;
+                                        successMsg.style.display = "block";
                                     }
                                 });
                         });

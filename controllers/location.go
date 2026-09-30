@@ -29,3 +29,20 @@ func (c *LocationController) Autocomplete() {
 	c.Data["json"] = output
 	c.ServeJSON()
 }
+
+func (c *LocationController) Details() {
+	c.EnableRender = false
+
+	placeID := c.Ctx.Input.Param(":placeId")
+	sessionToken := c.GetString("sessionToken")
+
+	output, err := services.FetchPlaceDetailsData(placeID, sessionToken)
+	if err != nil {
+		c.Data["json"] = map[string]string{"error": err.Error()}
+		c.ServeJSON()
+		return
+	}
+
+	c.Data["json"] = output
+	c.ServeJSON()
+}

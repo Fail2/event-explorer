@@ -27,3 +27,18 @@ type UIAutocompleteSuggestion struct {
 type UIAutocompleteResponse struct {
 	Suggestions []UIAutocompleteSuggestion `json:"suggestions"`
 }
+
+type GoogleAddressComponent struct {
+	LongText  string   `json:"longText"`
+	ShortText string   `json:"shortText"`
+	Types     []string `json:"types"`
+}
+
+type GooglePlaceDetailsResponse struct {
+	AddressComponents []GoogleAddressComponent `json:"addressComponents"`
+}
+
+type CleanLocationResult struct {
+	City        string `json:"city"`
+	CountryCode string `json:"countryCode"`
+}

@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func FetchAutocompleteData(input string, sessionToken string) (models.UIAutocompleteResponse, error) {
@@ -49,12 +50,6 @@ func FetchAutocompleteData(input string, sessionToken string) (models.UIAutocomp
 
 	client := &http.Client{}
 
-	fmt.Println("---------------------------------")
-	fmt.Println("Request Method:", req.Method)
-	fmt.Println("Request URL:", req.URL.String())
-	fmt.Println("Request Body:", string(jsonBody))
-	fmt.Println("---------------------------------")
-
 	resp, err := client.Do(req)
 	if err != nil {
 		return output, err
@@ -65,12 +60,6 @@ func FetchAutocompleteData(input string, sessionToken string) (models.UIAutocomp
 	if err != nil {
 		return output, err
 	}
-
-	fmt.Println("---------------------------------")
-	fmt.Println("Google API Status:", resp.StatusCode)
-	fmt.Println("Google Response:", string(respBody))
-	fmt.Println("---------------------------------")
-
 	if resp.StatusCode != http.StatusOK {
 		return output, fmt.Errorf("google api returned status %d", resp.StatusCode)
 	}
@@ -91,6 +80,67 @@ func FetchAutocompleteData(input string, sessionToken string) (models.UIAutocomp
 		)
 	}
 
-	fmt.Println(output)
 	return output, nil
+}
+
+func FetchPlaceDetailsData(placeID, sessionToken string) (models.CleanLocationResult, error) {
+	var output models.CleanLocationResult
+	var googleDetails models.GooglePlaceDetailsResponse
+
+	apiKey := os.Getenv("GOOGLE_PLACES_API_KEY")
+	if apiKey == "" {
+		return output, fmt.Errorf("GOOGLE_PLACES_API_KEY is empty")
+	}
+
+	sanitizedToken := strings.ReplaceAll(sessionToken, "-", "")
+	url := "https://places.googleapis.com/v1/places/" + placeID
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
+	if err != nil {
+		return output, nil
+	}
+
+	q := req.URL.Query()
+	q.Add("sessionToken", sanitizedToken)
+	req.URL.RawQuery = q.Encode()
+
+	req.Header.Set("X-Goog-Api-Key", apiKey)
+	req.Header.Set("X-Goog-FieldMask", "addressComponents")
+
+	client := &http.Client{}
+
+	resp, err := client.Do(req)
+	if err != nil {
+		return output, err
+	}
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		return output, fmt.Errorf("api status %d", resp.StatusCode)
+	}
+
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return output, err
+	}
+
+	if err := json.Unmarshal(respBody, &googleDetails); err != nil {
+		return output, err
+	}
+
+	for _, comp := range googleDetails.AddressComponents {
+		for _, t := range comp.Types {
+			if t == "locality" {
+				output.City = comp.LongText
+			}
+
+			if t == "country" {
+				output.CountryCode = comp.ShortText
+			}
+		}
+	}
+
+	return output, nil
+
 }
