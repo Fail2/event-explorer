@@ -4,11 +4,11 @@ import (
 	"event-explorer/services"
 	"fmt"
 
-	"github.com/beego/beego/v2/server/web"
+	beego "github.com/beego/beego/v2/server/web"
 )
 
 type LocationController struct {
-	web.Controller
+	beego.Controller
 }
 
 func (c *LocationController) Autocomplete() {
@@ -30,7 +30,7 @@ func (c *LocationController) Autocomplete() {
 	c.ServeJSON()
 }
 
-func (c *LocationController) Details() {
+func (c *LocationController) GetPlaceDetails() {
 	c.EnableRender = false
 
 	placeID := c.Ctx.Input.Param(":placeId")
