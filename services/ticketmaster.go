@@ -9,7 +9,13 @@ import (
 	"os"
 )
 
-func FetchTicketmasterEvents(city, countryCode, classification, size string) (models.TicketmasterResponse, error) {
+func FetchTicketmasterEvents(
+	city,
+	countryCode,
+	classification,
+	size string,
+) (models.TicketmasterResponse, error) {
+
 	var output models.TicketmasterResponse
 
 	apiKey := os.Getenv("TICKETMASTER_API_KEY")
@@ -17,19 +23,20 @@ func FetchTicketmasterEvents(city, countryCode, classification, size string) (mo
 		return output, fmt.Errorf("TICKETMASTER_API_KEY is not configured")
 	}
 
-	baseUrl := "https://app.ticketmaster.com/discovery/v2/events.json"
+	baseURL := "https://app.ticketmaster.com/discovery/v2/events.json"
 
-	req, err := http.NewRequest(http.MethodGet, baseUrl, nil)
+	req, err := http.NewRequest(http.MethodGet, baseURL, nil)
 	if err != nil {
-		return output, nil
+		return output, err
 	}
 
 	q := req.URL.Query()
+
 	q.Add("city", city)
 	q.Add("countryCode", countryCode)
 	q.Add("classificationName", classification)
 	q.Add("size", size)
-	q.Add("apiKey", apiKey)
+	q.Add("apikey", apiKey)
 
 	req.URL.RawQuery = q.Encode()
 
@@ -43,15 +50,20 @@ func FetchTicketmasterEvents(city, countryCode, classification, size string) (mo
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		return output, nil
+		return output, err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return output, fmt.Errorf("ticketmaster api returned status %d", resp.StatusCode)
+		return output, fmt.Errorf(
+			"ticketmaster api returned status %d: %s",
+			resp.StatusCode,
+			string(body),
+		)
 	}
 
 	if err := json.Unmarshal(body, &output); err != nil {
 		return output, err
 	}
+
 	return output, nil
 }
