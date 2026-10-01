@@ -1086,6 +1086,124 @@ body {
     flex-shrink: 0;
 }
 
+.cache-control {
+    margin: 0 0 48px;
+    padding: 24px;
+    background-color: #ffffff;
+    border: 1px solid var(--border-gray);
+    border-radius: 12px;
+}
+
+.cache-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr 160px auto auto;
+    gap: 12px;
+    align-items: center;
+}
+
+.cache-input,
+.cache-select {
+    width: 100%;
+    height: 44px;
+    padding: 10px 14px;
+    border: 1px solid var(--border-gray);
+    border-radius: 8px;
+    background-color: #f8faf9;
+    color: var(--text-gray);
+    font-family: inherit;
+    font-size: 0.9rem;
+}
+
+.cache-input {
+    cursor: not-allowed;
+}
+
+.cache-select {
+    background-color: #ffffff;
+    color: var(--text-black);
+    cursor: pointer;
+    outline: none;
+}
+
+.cache-select:focus {
+    border-color: var(--brand-accent);
+}
+
+.cache-button {
+    height: 44px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.cache-button:hover {
+    transform: translateY(-1px);
+}
+
+.cache-button--partial {
+    background-color: #014736;
+    color: #ffffff;
+}
+
+.cache-button--partial:hover {
+    background-color: var(--brand-accent);
+}
+
+.cache-button--full {
+    background-color: #f4f4f5;
+    color: #991b1b;
+    border: 1px solid #fecaca;
+}
+
+.cache-button--full:hover {
+    background-color: #fee2e2;
+}
+
+
+@media (max-width: 900px) {
+    .cache-form {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .cache-button {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 600px) {
+    .cache-control {
+        margin-bottom: 40px;
+        padding: 16px;
+    }
+
+    .cache-form {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .cache-input,
+    .cache-select,
+    .cache-button {
+        width: 100%;
+        height: 46px;
+    }
+
+    .cache-button {
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 900px) {
     .details-container-grid {
         grid-template-columns: 1fr;
