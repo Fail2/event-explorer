@@ -8,7 +8,7 @@ Event data comes from the Ticketmaster Discovery API, while city search and loca
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com
+git clone https://github.com/Fail2/event-explorer.git
 cd event-explorer
 ```
 
