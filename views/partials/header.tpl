@@ -7,6 +7,7 @@
     <meta name="description" content="{{if .MetaDescription}}{{.MetaDescription}}{{else}}Discover local live Music and Sports events in your favourite cities. Find dates, venues, details, and purchase direct verified tickets safely.{{end}}">
     <link rel="stylesheet" href="../static/css/style.css">
     <script src="../static/js/app.js"></script>
+    <script src="../static/js/cache.js"></script>
 </head>
 <body>
     <header class="site-header">
