@@ -12,4 +12,5 @@ func init() {
 	beego.Router("/api/locations/:placeId", &controllers.LocationController{}, "get:GetPlaceDetails")
 	beego.Router("/events", &controllers.EventController{}, "get:GetEvents")
 	beego.Router("/events/:id", &controllers.EventController{}, "get:GetEventDetails")
+	beego.Router("/api/cache/clear", &controllers.CacheController{}, "post:Purge")
 }
