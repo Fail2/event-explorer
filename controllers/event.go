@@ -31,27 +31,43 @@ func (c *EventController) GetEvents() {
 	cachedMusic, musicHit := cache.Get(city, countryCode, "Music")
 	cachedSports, sportsHit := cache.Get(city, countryCode, "Sports")
 
-	if musicHit && sportsHit {
+	if musicHit {
 		c.Data["MusicEvents"] = cachedMusic
+		c.Data["MusicCacheStatus"] = "Cache Hit"
+	}
+
+	if sportsHit {
 		c.Data["SportsEvents"] = cachedSports
+		c.Data["SportsCacheStatus"] = "Cache Hit"
+	}
+
+	if musicHit && sportsHit {
 		c.TplName = "listing.tpl"
 		return
 	}
 
 	results, errors := services.GetConcurrentEvents(city, countryCode)
 
-	if err, exists := errors["music"]; exists {
-		c.Data["MusicError"] = fmt.Sprintf("Music events are temporarily unavailable: %v", err)
-	} else {
-		c.Data["MusicEvents"] = results["music"]
-		cache.Set(city, countryCode, "Music", results["music"])
+	if !musicHit {
+		if err, exists := errors["music"]; exists {
+			c.Data["MusicError"] = fmt.Sprintf("Music events are temporarily unavailable: %v", err)
+			c.Data["MusicCacheStatus"] = "Expired Data"
+		} else {
+			c.Data["MusicEvents"] = results["music"]
+			cache.Set(city, countryCode, "Music", results["music"])
+			c.Data["MusicCacheStatus"] = "Fresh Data"
+		}
 	}
 
-	if err, exists := errors["sports"]; exists {
-		c.Data["SportsError"] = fmt.Sprintf("Sports events are temporarily unavailable: %v", err)
-	} else {
-		c.Data["SportsEvents"] = results["sports"]
-		cache.Set(city, countryCode, "Sports", results["sports"])
+	if !sportsHit {
+		if err, exists := errors["sports"]; exists {
+			c.Data["SportsError"] = fmt.Sprintf("Sports events are temporarily unavailable: %v", err)
+			c.Data["SportsCacheStatus"] = "Expired Data"
+		} else {
+			c.Data["SportsEvents"] = results["sports"]
+			cache.Set(city, countryCode, "Sports", results["sports"])
+			c.Data["SportsCacheStatus"] = "Fresh Data"
+		}
 	}
 
 	c.TplName = "listing.tpl"
