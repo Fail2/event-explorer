@@ -81,3 +81,46 @@ func (c *MemoryCache) startJanitor(interval time.Duration) {
 		c.mu.Unlock()
 	}
 }
+
+func (c *MemoryCache) DeleteData(city, countryCode, category string) (int, string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	key := fmt.Sprintf("%s:%s:%s", city, countryCode, category)
+
+	if _, exists := c.items[key]; exists {
+		delete(c.items, key)
+
+		fmt.Printf(
+			"INFO cache manual check evicted specific key=%s\n",
+			key,
+		)
+
+		return 1, fmt.Sprintf(
+			"Specific cache item bound to key [%s] evicted successfully",
+			key,
+		)
+	}
+
+	return 0, fmt.Sprintf(
+		"No active cache record found matching key [%s]",
+		key,
+	)
+}
+
+func (c *MemoryCache) ClearData() (int, string) {
+	c.mu.Lock()
+	defer c.mu.Unlock()
+
+	count := len(c.items)
+	c.items = make(map[string]CacheItem)
+
+	if count > 0 {
+		fmt.Printf(
+			"INFO cache manual flush purged total %d elements\n",
+			count,
+		)
+	}
+
+	return count, "Entire system memory cache cleared successfully"
+}
