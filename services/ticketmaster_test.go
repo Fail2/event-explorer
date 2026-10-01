@@ -7,8 +7,6 @@ import (
 	"os"
 	"strings"
 	"testing"
-
-	"event-explorer/models"
 )
 
 type mockRoundTripper struct {
@@ -62,37 +60,11 @@ func TestFormatTime(t *testing.T) {
 }
 
 func TestFetchTicketmasterEvents(t *testing.T) {
-	oldAPIKey := getenv("TICKETMASTER_API_KEY")
-	defer setenv("TICKETMASTER_API_KEY", oldAPIKey)
+	oldAPIKey := os.Getenv("TICKETMASTER_API_KEY")
+	defer os.Setenv("TICKETMASTER_API_KEY", oldAPIKey)
 
 	t.Run("missing api key", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "")
-
-		_, err := FetchTicketmasterEvents(
-			"London",
-			"GB",
-			"Music",
-			"6",
-		)
-
-		if err == nil {
-			t.Fatal("expected error, got nil")
-		}
-	})
-
-	t.Run("request creation error", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
-
-		oldClient := httpClient
-		defer func() {
-			httpClient = oldClient
-		}()
-
-		httpClient = &http.Client{
-			Transport: &mockRoundTripper{
-				err: errors.New("request failed"),
-			},
-		}
+		os.Setenv("TICKETMASTER_API_KEY", "")
 
 		_, err := FetchTicketmasterEvents(
 			"London",
@@ -107,7 +79,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 	})
 
 	t.Run("http client error", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -133,7 +105,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 	})
 
 	t.Run("read body error", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -144,7 +116,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 			Transport: &mockRoundTripper{
 				response: &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(errorReader{}),
+					Body:       errorReader{},
 					Header:     make(http.Header),
 				},
 			},
@@ -163,7 +135,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 	})
 
 	t.Run("non 200 response", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -192,7 +164,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 	})
 
 	t.Run("invalid json", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -221,7 +193,7 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 	})
 
 	t.Run("success", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -261,11 +233,11 @@ func TestFetchTicketmasterEvents(t *testing.T) {
 }
 
 func TestFetchTicketmasterEventDetails(t *testing.T) {
-	oldAPIKey := getenv("TICKETMASTER_API_KEY")
-	defer setenv("TICKETMASTER_API_KEY", oldAPIKey)
+	oldAPIKey := os.Getenv("TICKETMASTER_API_KEY")
+	defer os.Setenv("TICKETMASTER_API_KEY", oldAPIKey)
 
 	t.Run("missing api key", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "")
+		os.Setenv("TICKETMASTER_API_KEY", "")
 
 		_, err := FetchTicketmasterEventDetails("event-123")
 
@@ -275,7 +247,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 
 	t.Run("http client error", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -296,7 +268,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 
 	t.Run("non 200 response", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -320,7 +292,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 
 	t.Run("read body error", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -331,7 +303,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 			Transport: &mockRoundTripper{
 				response: &http.Response{
 					StatusCode: http.StatusOK,
-					Body:       io.NopCloser(errorReader{}),
+					Body:       errorReader{},
 					Header:     make(http.Header),
 				},
 			},
@@ -345,7 +317,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 
 	t.Run("invalid json", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -369,7 +341,7 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 
 	t.Run("success with image and venue", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -380,17 +352,17 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 			"id": "event-123",
 			"name": "Test Concert",
 			"url": "https://example.com/ticket",
-			"description": "Test description",
+			"pleaseNote": "Test description",
 			"dates": {
 				"start": {
 					"localDate": "2026-10-01",
-					"localTime": "19:30:00",
-					"timezone": "Europe/London"
-				}
+					"localTime": "19:30:00"
+				},
+				"timeZone": "Europe/London"
 			},
 			"classifications": [
 				{
-					"category": {
+					"segment": {
 						"name": "Music"
 					},
 					"genre": {
@@ -444,11 +416,114 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 			t.Fatalf("unexpected error: %v", err)
 		}
 
-		assertUIEvent(t, result)
+		if result.ID != "event-123" {
+			t.Errorf("ID = %v, want event-123", result.ID)
+		}
+
+		if result.Name != "Test Concert" {
+			t.Errorf("Name = %v, want Test Concert", result.Name)
+		}
+
+		if result.TicketURL != "https://example.com/ticket" {
+			t.Errorf(
+				"TicketURL = %v, want https://example.com/ticket",
+				result.TicketURL,
+			)
+		}
+
+		if result.Description != "Test description" {
+			t.Errorf(
+				"Description = %v, want Test description",
+				result.Description,
+			)
+		}
+
+		if result.Date != "2026-10-01" {
+			t.Errorf("Date = %v, want 2026-10-01", result.Date)
+		}
+
+		if result.Time != "7:30 PM" {
+			t.Errorf("Time = %v, want 7:30 PM", result.Time)
+		}
+
+		if result.TimeZone != "Europe/London" {
+			t.Errorf(
+				"TimeZone = %v, want Europe/London",
+				result.TimeZone,
+			)
+		}
+
+		if result.Category != "Music" {
+			t.Errorf(
+				"Category = %v, want Music",
+				result.Category,
+			)
+		}
+
+		if result.Genre != "Rock" {
+			t.Errorf(
+				"Genre = %v, want Rock",
+				result.Genre,
+			)
+		}
+
+		if result.Image != "https://example.com/image.jpg" {
+			t.Errorf(
+				"Image = %v, want https://example.com/image.jpg",
+				result.Image,
+			)
+		}
+
+		if result.Venue != "Test Arena" {
+			t.Errorf(
+				"Venue = %v, want Test Arena",
+				result.Venue,
+			)
+		}
+
+		if result.City != "London" {
+			t.Errorf("City = %v, want London", result.City)
+		}
+
+		if result.State != "London" {
+			t.Errorf("State = %v, want London", result.State)
+		}
+
+		if result.Country != "United Kingdom" {
+			t.Errorf(
+				"Country = %v, want United Kingdom",
+				result.Country,
+			)
+		}
+
+		if result.CountryCode != "GB" {
+			t.Errorf("CountryCode = %v, want GB", result.CountryCode)
+		}
+
+		if result.Address != "123 Test Street" {
+			t.Errorf(
+				"Address = %v, want 123 Test Street",
+				result.Address,
+			)
+		}
+
+		if result.GeneralRule != "No outside food" {
+			t.Errorf(
+				"GeneralRule = %v, want No outside food",
+				result.GeneralRule,
+			)
+		}
+
+		if result.ChildRule != "Children allowed" {
+			t.Errorf(
+				"ChildRule = %v, want Children allowed",
+				result.ChildRule,
+			)
+		}
 	})
 
 	t.Run("success without image and venue", func(t *testing.T) {
-		setenv("TICKETMASTER_API_KEY", "test-key")
+		os.Setenv("TICKETMASTER_API_KEY", "test-key")
 
 		oldClient := httpClient
 		defer func() {
@@ -459,17 +534,17 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 			"id": "event-456",
 			"name": "Simple Event",
 			"url": "https://example.com/ticket",
-			"description": "Simple description",
+			"pleaseNote": "Simple description",
 			"dates": {
 				"start": {
 					"localDate": "2026-10-02",
-					"localTime": "20:00:00",
-					"timezone": "Europe/London"
-				}
+					"localTime": "20:00:00"
+				},
+				"timeZone": "Europe/London"
 			},
 			"classifications": [
 				{
-					"category": {
+					"segment": {
 						"name": "Sports"
 					},
 					"genre": {
@@ -498,6 +573,46 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 			t.Errorf("ID = %v, want event-456", result.ID)
 		}
 
+		if result.Name != "Simple Event" {
+			t.Errorf("Name = %v, want Simple Event", result.Name)
+		}
+
+		if result.Description != "Simple description" {
+			t.Errorf(
+				"Description = %v, want Simple description",
+				result.Description,
+			)
+		}
+
+		if result.Date != "2026-10-02" {
+			t.Errorf("Date = %v, want 2026-10-02", result.Date)
+		}
+
+		if result.Time != "8:00 PM" {
+			t.Errorf("Time = %v, want 8:00 PM", result.Time)
+		}
+
+		if result.TimeZone != "Europe/London" {
+			t.Errorf(
+				"TimeZone = %v, want Europe/London",
+				result.TimeZone,
+			)
+		}
+
+		if result.Category != "Sports" {
+			t.Errorf(
+				"Category = %v, want Sports",
+				result.Category,
+			)
+		}
+
+		if result.Genre != "Football" {
+			t.Errorf(
+				"Genre = %v, want Football",
+				result.Genre,
+			)
+		}
+
 		if result.Image != "" {
 			t.Errorf("Image = %v, want empty", result.Image)
 		}
@@ -508,82 +623,6 @@ func TestFetchTicketmasterEventDetails(t *testing.T) {
 	})
 }
 
-func assertUIEvent(t *testing.T, event models.UIEvent) {
-	t.Helper()
-
-	if event.ID != "event-123" {
-		t.Errorf("ID = %v, want event-123", event.ID)
-	}
-
-	if event.Name != "Test Concert" {
-		t.Errorf("Name = %v, want Test Concert", event.Name)
-	}
-
-	if event.TicketURL != "https://example.com/ticket" {
-		t.Errorf("TicketURL = %v, want ticket URL", event.TicketURL)
-	}
-
-	if event.Description != "Test description" {
-		t.Errorf("Description = %v, want Test description", event.Description)
-	}
-
-	if event.Date != "2026-10-01" {
-		t.Errorf("Date = %v, want 2026-10-01", event.Date)
-	}
-
-	if event.Time != "7:30 PM" {
-		t.Errorf("Time = %v, want 7:30 PM", event.Time)
-	}
-
-	if event.TimeZone != "Europe/London" {
-		t.Errorf("TimeZone = %v, want Europe/London", event.TimeZone)
-	}
-
-	if event.Category != "Music" {
-		t.Errorf("Category = %v, want Music", event.Category)
-	}
-
-	if event.Genre != "Rock" {
-		t.Errorf("Genre = %v, want Rock", event.Genre)
-	}
-
-	if event.Image != "https://example.com/image.jpg" {
-		t.Errorf("Image = %v, want image URL", event.Image)
-	}
-
-	if event.Venue != "Test Arena" {
-		t.Errorf("Venue = %v, want Test Arena", event.Venue)
-	}
-
-	if event.City != "London" {
-		t.Errorf("City = %v, want London", event.City)
-	}
-
-	if event.State != "London" {
-		t.Errorf("State = %v, want London", event.State)
-	}
-
-	if event.Country != "United Kingdom" {
-		t.Errorf("Country = %v, want United Kingdom", event.Country)
-	}
-
-	if event.CountryCode != "GB" {
-		t.Errorf("CountryCode = %v, want GB", event.CountryCode)
-	}
-
-	if event.Address != "123 Test Street" {
-		t.Errorf("Address = %v, want 123 Test Street", event.Address)
-	}
-
-	if event.GeneralRule != "No outside food" {
-		t.Errorf("GeneralRule = %v, want No outside food", event.GeneralRule)
-	}
-
-	if event.ChildRule != "Children allowed" {
-		t.Errorf("ChildRule = %v, want Children allowed", event.ChildRule)
-	}
-}
-
 type errorReader struct{}
 
 func (errorReader) Read([]byte) (int, error) {
@@ -592,16 +631,4 @@ func (errorReader) Read([]byte) (int, error) {
 
 func (errorReader) Close() error {
 	return nil
-}
-
-func getenv(key string) string {
-	return strings.TrimSpace(getenvRaw(key))
-}
-
-func getenvRaw(key string) string {
-	return os.Getenv(key)
-}
-
-func setenv(key, value string) {
-	_ = os.Setenv(key, value)
 }
