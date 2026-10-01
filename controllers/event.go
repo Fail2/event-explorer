@@ -8,6 +8,9 @@ import (
 	beego "github.com/beego/beego/v2/server/web"
 )
 
+var getConcurrentEvents = services.GetConcurrentEvents
+var fetchTicketmasterEventDetails = services.FetchTicketmasterEventDetails
+
 type EventController struct {
 	beego.Controller
 }
@@ -46,7 +49,7 @@ func (c *EventController) GetEvents() {
 		return
 	}
 
-	results, errors := services.GetConcurrentEvents(city, countryCode)
+	results, errors := getConcurrentEvents(city, countryCode)
 
 	if !musicHit {
 		if err, exists := errors["music"]; exists {
@@ -81,7 +84,7 @@ func (c *EventController) GetEventDetails() {
 		return
 	}
 
-	event, err := services.FetchTicketmasterEventDetails(eventID)
+	event, err := fetchTicketmasterEventDetails(eventID)
 	if err != nil {
 		c.Data["Error"] = fmt.Sprintf(
 			"Event details are temporarily unavailable: %v",
