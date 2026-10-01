@@ -21,7 +21,6 @@
         </div>
     </div>
 
-
     <div class="cache-control">
         <form id="cache-form" class="cache-form">
             <input type="text" name="city" value="{{.City}}" class="cache-input" readonly>
@@ -38,23 +37,28 @@
                 Clear Current City Cache
             </button>
 
-            <a id="clear-whole-cache" class="cache-button cache-button--full">
+            <a href="#" id="clear-whole-cache" class="cache-button cache-button--full">
                 Clear Whole Cache
             </a>
         </form>
     </div>
 
-
-    <!-- Music -->
     <div class="events-category-section">
         <div class="category-header">
             <span class="sub-badge-text">TURN UP THE EVENING</span>
 
             <div class="title-with-count">
-                <h2>Music</h2>
-                {{if .MusicEvents}}
-                    <span class="count-badge">{{len .MusicEvents}}</span>
-                {{end}}
+                <div class="category-title-left">
+                    <h2>Music</h2>
+
+                    {{if .MusicEvents}}
+                        <span class="count-badge">{{len .MusicEvents}}</span>
+                    {{end}}
+                </div>
+
+                <span class="cache-status-badge {{if eq .MusicCacheStatus "Cache Hit"}}cache-status-badge--hit{{end}}">
+                    {{.MusicCacheStatus}}
+                </span>
             </div>
         </div>
 
@@ -98,6 +102,7 @@
 
                             <div class="card-footer-row">
                                 <span class="event-locality-text">{{.City}}</span>
+
                                 <span class="lnk-view-details">
                                     View details &nbsp;↗
                                 </span>
@@ -111,17 +116,22 @@
         {{end}}
     </div>
 
-
-    <!-- Sports -->
     <div class="events-category-section">
         <div class="category-header">
             <span class="sub-badge-text">GET INTO THE GAME</span>
 
             <div class="title-with-count">
-                <h2>Sports</h2>
-                {{if .SportsEvents}}
-                    <span class="count-badge">{{len .SportsEvents}}</span>
-                {{end}}
+                <div class="category-title-left">
+                    <h2>Sports</h2>
+
+                    {{if .SportsEvents}}
+                        <span class="count-badge">{{len .SportsEvents}}</span>
+                    {{end}}
+                </div>
+
+                <span class="cache-status-badge {{if eq .SportsCacheStatus "Cache Hit"}}cache-status-badge--hit{{end}}">
+                    {{.SportsCacheStatus}}
+                </span>
             </div>
         </div>
 
@@ -165,6 +175,7 @@
 
                             <div class="card-footer-row">
                                 <span class="event-locality-text">{{.City}}</span>
+
                                 <span class="lnk-view-details">
                                     View details &nbsp;↗
                                 </span>
@@ -181,4 +192,3 @@
 </div>
 
 {{template "partials/footer.tpl" .}}
-
