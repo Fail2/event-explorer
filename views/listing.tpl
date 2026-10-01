@@ -22,6 +22,29 @@
     </div>
 
 
+    <div class="cache-control">
+        <form id="cache-form" class="cache-form">
+            <input type="text" name="city" value="{{.City}}" class="cache-input" readonly>
+            <input type="text" name="countryCode" value="{{.CountryCode}}" class="cache-input" readonly>
+
+            <div class="cache-select-wrapper">
+                <select name="category" class="cache-select">
+                    <option value="Music" selected>Music</option>
+                    <option value="Sports">Sports</option>
+                </select>
+            </div>
+
+            <button type="submit" class="cache-button cache-button--partial">
+                Clear Current City Cache
+            </button>
+
+            <a id="clear-whole-cache" class="cache-button cache-button--full">
+                Clear Whole Cache
+            </a>
+        </form>
+    </div>
+
+
     <!-- Music -->
     <div class="events-category-section">
         <div class="category-header">
