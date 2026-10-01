@@ -10,6 +10,8 @@ import (
 	"time"
 )
 
+var httpClient = &http.Client{}
+
 func formatTime(timeStr string) string {
 	t, err := time.Parse("15:04:05", timeStr)
 	if err != nil {
@@ -45,9 +47,7 @@ func FetchTicketmasterEvents(city, countryCode, classification, size string) (mo
 
 	req.URL.RawQuery = q.Encode()
 
-	client := &http.Client{}
-
-	resp, err := client.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return output, err
 	}
@@ -74,15 +74,20 @@ func FetchTicketmasterEvents(city, countryCode, classification, size string) (mo
 }
 
 func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
+
 	var output models.UIEvent
+
 	apiKey := os.Getenv("TICKETMASTER_API_KEY")
 	if apiKey == "" {
 		return output, fmt.Errorf("TICKETMASTER_API_KEY is not configured")
 	}
 
-	baseUrl := fmt.Sprintf("https://app.ticketmaster.com/discovery/v2/events/%s.json", eventID)
+	baseURL := fmt.Sprintf(
+		"https://app.ticketmaster.com/discovery/v2/events/%s.json",
+		eventID,
+	)
 
-	req, err := http.NewRequest("GET", baseUrl, nil)
+	req, err := http.NewRequest(http.MethodGet, baseURL, nil)
 	if err != nil {
 		return output, err
 	}
@@ -91,15 +96,17 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 	q.Add("apikey", apiKey)
 	req.URL.RawQuery = q.Encode()
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	resp, err := httpClient.Do(req)
 	if err != nil {
 		return output, err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode != http.StatusOK {
-		return output, fmt.Errorf("ticketmaster api details returned status %d", resp.StatusCode)
+		return output, fmt.Errorf(
+			"ticketmaster api details returned status %d",
+			resp.StatusCode,
+		)
 	}
 
 	body, err := io.ReadAll(resp.Body)
@@ -108,6 +115,7 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 	}
 
 	var tmEvent models.TMEvent
+
 	if err := json.Unmarshal(body, &tmEvent); err != nil {
 		return output, err
 	}
@@ -130,6 +138,7 @@ func FetchTicketmasterEventDetails(eventID string) (models.UIEvent, error) {
 
 	if len(tmEvent.Embedded.Venues) > 0 {
 		v := tmEvent.Embedded.Venues[0]
+
 		output.Venue = v.Name
 		output.City = v.City.Name
 		output.State = v.State.Name
