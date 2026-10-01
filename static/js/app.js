@@ -14,6 +14,10 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    if (!cityInput) {
+        return
+    }
+
     cityInput.addEventListener('input', function () {
         const query = cityInput.value.trim();
 
